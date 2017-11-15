@@ -1,17 +1,7 @@
-import React,{Component}from 'react';
+import React from 'react';
 import {Button, Table, Form, FormGroup, ControlLabel, FormControl, Panel} from "react-bootstrap"
 
 class Record extends React.Component{
-  constructor(props) {
-      state={
-          record:this.props.record
-      }
-  }
-  handleDelete(){
-      console.log("triggered")
-      var record=this.state.record
-      this.props.deleteRecord(record)
-  }
   fmoney(s, n=2){       // this function is copied from http://blog.csdn.net/fengzijinliang/article/details/53335320
       if(s==='')
          return;
@@ -25,16 +15,18 @@ class Record extends React.Component{
       }   
       return t.split("").reverse().join("") + "." + r;   
   } 
+  handleDelete(){
+      this.props.deleteRecord(this.props.i)
+  }
   render(){
-    var record=this.state.record
       return(
           <tr>
               <th>&emsp;</th>
-              <td>{this.state.record.date}</td>
-              <td>{this.state.record.title}</td>
-              <td>￥{this.fmoney(this.state.record.amount)}</td>
+              <td>{this.props.record.date}</td>
+              <td>{this.props.record.title}</td>
+              <td>￥{this.fmoney(this.props.record.amount)}</td>
               <td>
-                  <Button bsStyle="danger" onClick={this.props.deleteRecord.bind(record)}>Delete</Button>
+                  <Button bsStyle="danger" onClick={this.handleDelete.bind(this)}>Delete</Button>
               </td>
           </tr>
       )
@@ -94,9 +86,6 @@ class RecordForm extends React.Component{
 }
 
 class RecordPanel extends React.Component{
-  constructor(props){
-      super(props);
-  }
   render(){
       return (
           <Table>
@@ -145,16 +134,26 @@ class ChargeAccount extends React.Component{
       balance+=amount
       this.setState({records:records,num:num,benefits:benefits,debits:debits,balance:balance})
   }
-  deleteRecord(record){
-      console.log("triggered");
-      var index=this.state.records.indexOf(record);
-      this.state.records.splice(index,1);
+  deleteRecord(i){
+      var records=this.state.records;
+      var amount=parseFloat(records[i].amount)
+      var benefits=this.state.benefits
+      var debits=this.state.debits
+      var balance=this.state.balance
+      if (amount>0)
+          benefits-=amount
+      else
+          debits-=amount
+      balance-=amount
+      records.splice(i,1);
+      this.setState({records:records,benefits:benefits,debits:debits,balance:balance})
   }
   render(){
       const records=this.state.records;
       const benefits=this.state.benefits;
       const debits=this.state.debits;
       const balance=this.state.balance;
+      const del=this.deleteRecord.bind(this);
       return(
           <div className='records'>
           <hr></hr>
@@ -175,9 +174,9 @@ class ChargeAccount extends React.Component{
                       </thead>
                       <tbody>
                       {
-                          records.map( function(record) {
-                              return <Record record={record} deleteRecord={this.deleteRecord.bind(this)}/>
-                          })
+                          records.map( function(record,i) {
+                              return <Record key={i} record={record} deleteRecord={del} i={i}/>
+                          },this)
                       }
                       </tbody>
                   </Table>
