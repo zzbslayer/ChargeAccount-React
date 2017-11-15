@@ -1,5 +1,4 @@
 import React,{Component}from 'react';
-import ReactDOM from 'react-dom';
 import {Button, Table, Form, FormGroup, ControlLabel, FormControl, Panel} from "react-bootstrap"
 
 class Record extends React.Component{
@@ -25,8 +24,9 @@ class Record extends React.Component{
           t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
       }   
       return t.split("").reverse().join("") + "." + r;   
- } 
+  } 
   render(){
+    var record=this.state.record
       return(
           <tr>
               <th>&emsp;</th>
@@ -34,7 +34,7 @@ class Record extends React.Component{
               <td>{this.state.record.title}</td>
               <td>￥{this.fmoney(this.state.record.amount)}</td>
               <td>
-                  <Button bsStyle="danger" onClick={this.handleDelete.bind(this)}>Delete</Button>
+                  <Button bsStyle="danger" onClick={this.props.deleteRecord.bind(record)}>Delete</Button>
               </td>
           </tr>
       )
@@ -62,7 +62,6 @@ class RecordForm extends React.Component{
           title:this.state.title,
           amount:this.state.amount
       }
-      //console.log(record)
       this.props.addRecord(record)
   }
   render(){
@@ -147,6 +146,7 @@ class ChargeAccount extends React.Component{
       this.setState({records:records,num:num,benefits:benefits,debits:debits,balance:balance})
   }
   deleteRecord(record){
+      console.log("triggered");
       var index=this.state.records.indexOf(record);
       this.state.records.splice(index,1);
   }
@@ -176,7 +176,7 @@ class ChargeAccount extends React.Component{
                       <tbody>
                       {
                           records.map( function(record) {
-                              return <Record record={record} deleteRecord={deleteRecord}/>
+                              return <Record record={record} deleteRecord={this.deleteRecord.bind(this)}/>
                           })
                       }
                       </tbody>
