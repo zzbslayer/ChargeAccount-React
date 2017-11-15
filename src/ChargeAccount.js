@@ -4,12 +4,16 @@ import {Button, Table, Form, FormGroup, ControlLabel, FormControl, Panel} from "
 
 class Record extends React.Component{
   constructor(props) {
-      super(props);
+      state={
+          record:this.props.record
+      }
   }
   handleDelete(){
-
+      console.log("triggered")
+      var record=this.state.record
+      this.props.deleteRecord(record)
   }
-  fmoney(s, n=2){   
+  fmoney(s, n=2){       // this function is copied from http://blog.csdn.net/fengzijinliang/article/details/53335320
       if(s==='')
          return;
       n = n > 0 && n <= 20 ? n : 2;   
@@ -26,11 +30,11 @@ class Record extends React.Component{
       return(
           <tr>
               <th>&emsp;</th>
-              <td>{this.props.date}</td>
-              <td>{this.props.title}</td>
-              <td>￥{this.fmoney(this.props.amount)}</td>
+              <td>{this.state.record.date}</td>
+              <td>{this.state.record.title}</td>
+              <td>￥{this.fmoney(this.state.record.amount)}</td>
               <td>
-                  <Button bsStyle="danger" onClick={this.handleDelete}>Delete</Button>
+                  <Button bsStyle="danger" onClick={this.handleDelete.bind(this)}>Delete</Button>
               </td>
           </tr>
       )
@@ -48,8 +52,7 @@ class RecordForm extends React.Component{
       }
   }
   handleChange(e){
-      var name = e.target.name
-      this.setState({[name]:e.target.value, valid:this.state.date&&this.state.title&&this.state.amount})
+      this.setState({[e.target.name]:e.target.value, valid:this.state.date&&this.state.title&&this.state.amount})
   }
   conveyRecord(e){
       e.preventDefault();
@@ -96,9 +99,6 @@ class RecordPanel extends React.Component{
       super(props);
   }
   render(){
-      console.log(this.props.benefits)
-      console.log(this.props.debits)
-      console.log(this.props.balance)
       return (
           <Table>
           <tbody>
@@ -146,14 +146,15 @@ class ChargeAccount extends React.Component{
       balance+=amount
       this.setState({records:records,num:num,benefits:benefits,debits:debits,balance:balance})
   }
+  deleteRecord(record){
+      var index=this.state.records.indexOf(record);
+      this.state.records.splice(index,1);
+  }
   render(){
       const records=this.state.records;
       const benefits=this.state.benefits;
       const debits=this.state.debits;
       const balance=this.state.balance;
-      console.log(benefits)
-      console.log(debits)
-      console.log(balance)
       return(
           <div className='records'>
           <hr></hr>
@@ -175,7 +176,7 @@ class ChargeAccount extends React.Component{
                       <tbody>
                       {
                           records.map( function(record) {
-                              return <Record key={record.key} date={record.date} title={record.title} amount={record.amount}></Record>
+                              return <Record record={record} deleteRecord={deleteRecord}/>
                           })
                       }
                       </tbody>
