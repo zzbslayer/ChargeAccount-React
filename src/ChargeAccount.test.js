@@ -16,8 +16,8 @@ it('renders as expected', () => {
   expect(tree).toMatchSnapshot();
 });
 
-describe('Add a record', function() {
-  it('RecordTable should update when a record added', function(){
+describe('Add a record', () => {
+  it('RecordTable should update when a record added', () => {
     
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
@@ -59,7 +59,7 @@ describe('Add a record', function() {
     expect(amount1).toEqual(amountInput);
   })
 
-  it('Benifits of RecordPanel should update when delete-button clicked', function(){
+  it('Benifits of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
@@ -87,7 +87,7 @@ describe('Add a record', function() {
     expect(benefitsAfterClick).toEqual(benefits+amountInput);
   })
 
-  it('Debits of RecordPanel should update when delete-button clicked', function(){
+  it('Debits of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
@@ -115,7 +115,7 @@ describe('Add a record', function() {
     expect(debitsAfterClick).toEqual(debits+amountInput);
   })
 
-  it('Balance of RecordPanel should update when delete-button clicked', function(){
+  it('Balance of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
@@ -144,8 +144,8 @@ describe('Add a record', function() {
   })
 })
 
-describe('Delete a record', function() {
-  it('RecordTable should update when delete-button clicked', function() {
+describe('Delete a record', () => {
+  it('RecordTable should update when delete-button clicked', () => {
     let ca = mount(<ChargeAccount/>);
     let recordsNum = ca.find('#recordTable').find('tbody').find('tr').length;
     
@@ -156,7 +156,7 @@ describe('Delete a record', function() {
     expect(recordsNumAfterClick).toEqual(recordsNum-1);
   })
 
-  it('Benefits of RecordPanel should update when delete-button clicked', function(){
+  it('Benefits of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
@@ -177,7 +177,7 @@ describe('Delete a record', function() {
     expect(benefitsAfterClick).toEqual(benefits-amount);
   })
 
-  it('Debits of RecordPanel should update when delete-button clicked', function(){
+  it('Debits of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
@@ -198,7 +198,7 @@ describe('Delete a record', function() {
     expect(debitsAfterClick).toEqual(debits-amount);
   })
 
-  it('Balance of RecordPanel should update when delete-button clicked', function(){
+  it('Balance of RecordPanel should update when delete-button clicked', () => {
     const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
