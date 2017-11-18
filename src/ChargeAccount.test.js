@@ -48,8 +48,13 @@ describe('Add a record', function() {
     const record_tbody = recordTable.querySelector('tbody');
     const record = (record_tbody.querySelectorAll('tr'))[2];
     const amount1 = RMBData2Float(record.querySelector('#amount').innerHTML);
-    console.log("amount:"+amout1)
+    const date1 = record.querySelector('#date').innerHTML;
+    const title1 = record.querySelector('#title').innerHTML;
+    console.log("date:"+date1)
+    console.log("title:"+title1)
+    console.log("amount:"+amount1)
     */
+    
   })
 })
 

@@ -79,7 +79,7 @@ class RecordForm extends React.Component{
                   <FormControl type="number" placeholder="Amount" name="amount" onChange={this.handleChange}/>
               </FormGroup>
               {' '}
-              <Button type="submit" onClick={this.conveyRecord} disabled={!this.state.valid}>
+              <Button type="submit" onClick={this.conveyRecord} >
                   Add
               </Button>
           </Form>
