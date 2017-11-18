@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div
+  className="records"
+>
+  <hr />
+  <h2
+    className="records"
+  >
+        Charge Account
+  </h2>
+  <div
+    className="row"
+  >
+    <table
+      className="table"
+      id="recordPanel"
+    >
+      <tbody>
+        <tr>
+          <th>
+             
+          </th>
+          <th>
+            <div
+              className="panel panel-success"
+              id={undefined}
+            >
+              <div
+                className="panel-heading"
+              >
+                Benefits
+              </div>
+              <div
+                className="panel-body"
+              >
+                ￥
+                10000
+              </div>
+            </div>
+          </th>
+          <th>
+              
+          </th>
+          <th>
+            <div
+              className="panel panel-danger"
+              id={undefined}
+            >
+              <div
+                className="panel-heading"
+              >
+                Debits
+              </div>
+              <div
+                className="panel-body"
+              >
+                ￥
+                -8000
+              </div>
+            </div>
+          </th>
+          <th>
+              
+          </th>
+          <th>
+            <div
+              className="panel panel-info"
+              id={undefined}
+            >
+              <div
+                className="panel-heading"
+              >
+                Balance
+              </div>
+              <div
+                className="panel-body"
+              >
+                ￥
+                2000
+              </div>
+            </div>
+          </th>
+          <th>
+             
+          </th>
+        </tr>
+      </tbody>
+    </table>
+    <form
+      className="form-inline"
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="formInlineDate"
+        >
+               Date
+        </label>
+         
+        <input
+          className="form-control"
+          id="formInlineDate"
+          name="date"
+          onChange={[Function]}
+          placeholder="Date"
+          type="text"
+        />
+      </div>
+       
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="formInlineTitel"
+        >
+          Title
+        </label>
+         
+        <input
+          className="form-control"
+          id="formInlineTitel"
+          name="title"
+          onChange={[Function]}
+          placeholder="Title"
+          type="text"
+        />
+      </div>
+       
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="formInlineAmount"
+        >
+          Amount
+        </label>
+         
+        <input
+          className="form-control"
+          id="formInlineAmount"
+          name="amount"
+          onChange={[Function]}
+          placeholder="Amount"
+          type="number"
+        />
+      </div>
+       
+      <button
+        className="btn btn-default"
+        disabled={true}
+        onClick={[Function]}
+        type="submit"
+      >
+        Add
+      </button>
+    </form>
+    <hr />
+    <table
+      className="table table-striped table-condensed table-hover"
+      id="recordTable"
+    >
+      <thead>
+        <tr>
+          <th>
+             
+          </th>
+          <th>
+            Date
+          </th>
+          <th>
+            Title
+          </th>
+          <th>
+            Amount
+          </th>
+          <th>
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+             
+          </td>
+          <td
+            id="date"
+          >
+            2017-11-11
+          </td>
+          <td
+            id="title"
+          >
+            Buy iPhoneX
+          </td>
+          <td
+            id="amount"
+          >
+            ￥
+            -8,000.00
+          </td>
+          <td
+            id="action"
+          >
+            <button
+              className="btn btn-danger"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             
+          </td>
+          <td
+            id="date"
+          >
+            2017-11-11
+          </td>
+          <td
+            id="title"
+          >
+            Pocket Money
+          </td>
+          <td
+            id="amount"
+          >
+            ￥
+            10,000.00
+          </td>
+          <td
+            id="action"
+          >
+            <button
+              className="btn btn-danger"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

@@ -8,3 +8,6 @@ and calculates
 - benefits
 - debits
 - balance
+
+Test:
+- npm test

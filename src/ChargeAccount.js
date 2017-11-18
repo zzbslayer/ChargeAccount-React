@@ -21,11 +21,11 @@ class Record extends React.Component{
   render(){
       return(
           <tr>
-              <th>&emsp;</th>
-              <td>{this.props.record.date}</td>
-              <td>{this.props.record.title}</td>
-              <td>￥{this.fmoney(this.props.record.amount)}</td>
-              <td>
+              <td>&emsp;</td>
+              <td id='date'>{this.props.record.date}</td>
+              <td id='title'>{this.props.record.title}</td>
+              <td id='amount'>￥{this.fmoney(this.props.record.amount)}</td>
+              <td id='action'>
                   <Button bsStyle="danger" onClick={this.handleDelete.bind(this)}>Delete</Button>
               </td>
           </tr>
@@ -34,8 +34,10 @@ class Record extends React.Component{
 }
 
 class RecordForm extends React.Component{
-  constructor(){
-      super();
+  constructor(props){
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+      this.conveyRecord = this.conveyRecord.bind(this);
       this.state={
           date:'',
           title:'',
@@ -62,22 +64,22 @@ class RecordForm extends React.Component{
               <FormGroup controlId="formInlineDate">
                   <ControlLabel>&emsp;&emsp;&emsp;&emsp;&emsp;Date</ControlLabel>
                   {' '}
-                  <FormControl type="text" placeholder="Date" name="date" onChange={this.handleChange.bind(this)}/>
+                  <FormControl type="text" placeholder="Date" name="date" onChange={this.handleChange}/>
               </FormGroup>
               {' '}
               <FormGroup controlId="formInlineTitel">
                   <ControlLabel>Title</ControlLabel>
                   {' '}
-                  <FormControl type="text" placeholder="Title" name="title" onChange={this.handleChange.bind(this)}/>
+                  <FormControl type="text" placeholder="Title" name="title" onChange={this.handleChange}/>
               </FormGroup>
               {' '}
               <FormGroup controlId="formInlineAmount">
                   <ControlLabel>Amount</ControlLabel>
                   {' '}
-                  <FormControl type="number" placeholder="Amount" name="amount" onChange={this.handleChange.bind(this)}/>
+                  <FormControl type="number" placeholder="Amount" name="amount" onChange={this.handleChange}/>
               </FormGroup>
               {' '}
-              <Button type="submit" onClick={this.conveyRecord.bind(this)} disabled={!this.state.valid}>
+              <Button type="submit" onClick={this.conveyRecord} disabled={!this.state.valid}>
                   Add
               </Button>
           </Form>
@@ -88,7 +90,7 @@ class RecordForm extends React.Component{
 class RecordPanel extends React.Component{
   render(){
       return (
-          <Table>
+          <Table id='recordPanel'>
           <tbody>
           <tr>
               <th>&emsp;</th>
@@ -106,12 +108,14 @@ class RecordPanel extends React.Component{
 }
 
 class ChargeAccount extends React.Component{
-  constructor() {
-      super();
+  constructor(props) {
+      super(props);
+      this.addRecord = this.addRecord.bind(this);
+      this.deleteRecord = this.deleteRecord.bind(this);
       this.state={
           records:[
-              {key:1, date:"2017-11-11", title:'Buy iPhoneX', amount:-8000,},
-              {key:2, date:"2017-11-11", title:'Pocket Money', amount:10000,}
+              {key:1, date:"2017-11-11", title:'Buy iPhoneX', amount:-8000},
+              {key:2, date:"2017-11-11", title:'Pocket Money', amount:10000}
           ],
           num:3,
           benefits:10000,
@@ -153,16 +157,15 @@ class ChargeAccount extends React.Component{
       const benefits=this.state.benefits;
       const debits=this.state.debits;
       const balance=this.state.balance;
-      const del=this.deleteRecord.bind(this);
       return(
           <div className='records'>
           <hr></hr>
               <h2 className='records'>&emsp;&emsp;&emsp;&emsp;Charge Account</h2>
               <div className='row'>
                   <RecordPanel benefits={benefits} debits={debits} balance={balance}/>
-                  <RecordForm ref="RecordForm" num={this.state.num} addRecord={this.addRecord.bind(this)}/>
+                  <RecordForm ref="RecordForm" num={this.state.num} addRecord={this.addRecord}/>
                   <hr />
-                  <Table striped condensed hover>
+                  <Table striped condensed hover id="recordTable">
                       <thead>
                           <tr>
                               <th>&emsp;</th>
@@ -175,7 +178,7 @@ class ChargeAccount extends React.Component{
                       <tbody>
                       {
                           records.map( function(record,i) {
-                              return <Record key={i} record={record} deleteRecord={del} i={i}/>
+                              return <Record key={i} record={record} deleteRecord={this.deleteRecord} i={i}/>
                           },this)
                       }
                       </tbody>
