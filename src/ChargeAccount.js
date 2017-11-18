@@ -22,10 +22,10 @@ class Record extends React.Component{
       return(
           <tr>
               <td>&emsp;</td>
-              <td id='date'>{this.props.record.date}</td>
-              <td id='title'>{this.props.record.title}</td>
-              <td id='amount'>￥{this.fmoney(this.props.record.amount)}</td>
-              <td id='action'>
+              <td className='date'>{this.props.record.date}</td>
+              <td className='title'>{this.props.record.title}</td>
+              <td className='amount'>￥{this.fmoney(this.props.record.amount)}</td>
+              <td className='action'>
                   <Button bsStyle="danger" onClick={this.handleDelete.bind(this)}>Delete</Button>
               </td>
           </tr>

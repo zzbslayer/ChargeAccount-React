@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders without crashing 1`] = `
+exports[`renders as expected 1`] = `
 <div
   className="records"
 >
@@ -190,23 +190,23 @@ exports[`renders without crashing 1`] = `
              
           </td>
           <td
-            id="date"
+            className="date"
           >
             2017-11-11
           </td>
           <td
-            id="title"
+            className="title"
           >
             Buy iPhoneX
           </td>
           <td
-            id="amount"
+            className="amount"
           >
             ￥
             -8,000.00
           </td>
           <td
-            id="action"
+            className="action"
           >
             <button
               className="btn btn-danger"
@@ -223,23 +223,23 @@ exports[`renders without crashing 1`] = `
              
           </td>
           <td
-            id="date"
+            className="date"
           >
             2017-11-11
           </td>
           <td
-            id="title"
+            className="title"
           >
             Pocket Money
           </td>
           <td
-            id="amount"
+            className="amount"
           >
             ￥
             10,000.00
           </td>
           <td
-            id="action"
+            className="action"
           >
             <button
               className="btn btn-danger"

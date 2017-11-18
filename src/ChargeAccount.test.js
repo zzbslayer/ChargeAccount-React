@@ -1,5 +1,5 @@
 import React from 'react';
-import TestUtils from 'react-dom/test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import TestRenderer from 'react-test-renderer';
 import {mount} from 'enzyme';
 import {findDOMNode} from 'react-dom';
@@ -10,51 +10,137 @@ function RMBData2Float(data) {
   return parseFloat((data.replace(',','')).substring(1));
 }
 
-it('renders without crashing', () => {
+it('renders as expected', () => {
   const ca = TestRenderer.create(<ChargeAccount />);
   let tree = ca.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 describe('Add a record', function() {
-  it('There\'s a problem I can\'t solve in the test', function(){
-    /* 
-    It seems that 'inputbox.value = "something"' can't change the value of a inputbox 
-
-    If I remove the validation check of Recordform,
-    record can be added when submitButton is clicked.
-    But the date, title and amount of the newly-added record is NULL.
-
-     I have read the official docs of enzyme and react but no api can help me 
-     Stackoverflow can't help me either 
-     so I don't know how to test the Recordform  
-     */
-
-    /*
-    const ca = TestUtils.renderIntoDocument(<ChargeAccount/>);
-    const caDOM =findDOMNode(ca);
-    const input = caDOM.querySelectorAll('input');
-    let date = input[0];
-    date.value = "2017-11-11";
-    let title = input[1];
-    title.value = "Buy hair lotion";
-    let amount = input[2];
-    amount.value = "-100";
+  it('RecordTable should update when a record added', function(){
     
-    let submitButton = caDOM.querySelector('button');
-    TestUtils.Simulate.click(submitButton);
-
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
+    const caDOM =findDOMNode(ca);
     const recordTable = caDOM.querySelector('#recordTable');
     const record_tbody = recordTable.querySelector('tbody');
-    const record = (record_tbody.querySelectorAll('tr'))[2];
-    const amount1 = RMBData2Float(record.querySelector('#amount').innerHTML);
-    const date1 = record.querySelector('#date').innerHTML;
-    const title1 = record.querySelector('#title').innerHTML;
-    console.log("date:"+date1)
-    console.log("title:"+title1)
-    console.log("amount:"+amount1)
-    */
+    const records = record_tbody.querySelectorAll('tr');
+    const recordsNum = records.length;
+
+    const input = caDOM.querySelectorAll('input');
+    let date = input[0];
+    let dateInput = "2017-11-11"
+    date.value = dateInput;
+    ReactTestUtils.Simulate.change(date);
+    let title = input[1];
+    let titleInput = "Buy hair lotion";
+    title.value = titleInput;
+    ReactTestUtils.Simulate.change(title);
+    let amount = input[2];
+    let amountInput = -100
+    amount.value = amountInput;
+    ReactTestUtils.Simulate.change(amount);
+    ReactTestUtils.Simulate.keyDown(amount, {key: "Enter", keyCode: 13, which: 13});
     
+    let submitButton = caDOM.querySelector('button');
+    ReactTestUtils.Simulate.click(submitButton);
+
+    const recordTableAfterClick = caDOM.querySelector('#recordTable');
+    const record_tbodyAfterClick = recordTableAfterClick.querySelector('tbody');
+    const recordsAfterClick = record_tbodyAfterClick.querySelectorAll('tr');
+    const recordsNumAfterClick = recordsAfterClick.length;
+
+    const NewRecord = recordsAfterClick[recordsNum];
+    const amount1 = RMBData2Float(NewRecord.querySelector('.amount').innerHTML);
+    const date1 = NewRecord.querySelector('.date').innerHTML;
+    const title1 = NewRecord.querySelector('.title').innerHTML;
+    expect(recordsNumAfterClick).toEqual(recordsNum+1);
+    expect(date1).toEqual(dateInput);
+    expect(title1).toEqual(titleInput);
+    expect(amount1).toEqual(amountInput);
+  })
+
+  it('Benifits of RecordPanel should update when delete-button clicked', function(){
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
+    const caDOM =findDOMNode(ca);
+    const panels = caDOM.querySelectorAll(".panel-body");
+    const benefits = RMBData2Float(panels[0].innerHTML);
+
+    const input = caDOM.querySelectorAll('input');
+    let date = input[0];
+    let dateInput = "2017-11-11"
+    date.value = dateInput;
+    ReactTestUtils.Simulate.change(date);
+    let title = input[1];
+    let titleInput = "Wages";
+    title.value = titleInput;
+    ReactTestUtils.Simulate.change(title);
+    let amount = input[2];
+    let amountInput = 15000
+    amount.value = amountInput;
+    ReactTestUtils.Simulate.change(amount);
+    ReactTestUtils.Simulate.keyDown(amount, {key: "Enter", keyCode: 13, which: 13});
+    let submitButton = caDOM.querySelector('button');
+    ReactTestUtils.Simulate.click(submitButton);
+
+    const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
+    const benefitsAfterClick = RMBData2Float(panels[0].innerHTML);
+    expect(benefitsAfterClick).toEqual(benefits+amountInput);
+  })
+
+  it('Debits of RecordPanel should update when delete-button clicked', function(){
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
+    const caDOM =findDOMNode(ca);
+    const panels = caDOM.querySelectorAll(".panel-body");
+    const debits = RMBData2Float(panels[1].innerHTML);
+
+    const input = caDOM.querySelectorAll('input');
+    let date = input[0];
+    let dateInput = "2017-11-11"
+    date.value = dateInput;
+    ReactTestUtils.Simulate.change(date);
+    let title = input[1];
+    let titleInput = "Buy hair lotion";
+    title.value = titleInput;
+    ReactTestUtils.Simulate.change(title);
+    let amount = input[2];
+    let amountInput = -100
+    amount.value = amountInput;
+    ReactTestUtils.Simulate.change(amount);
+    ReactTestUtils.Simulate.keyDown(amount, {key: "Enter", keyCode: 13, which: 13});
+    let submitButton = caDOM.querySelector('button');
+    ReactTestUtils.Simulate.click(submitButton);
+
+    const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
+    const debitsAfterClick = RMBData2Float(panels[1].innerHTML);
+    expect(debitsAfterClick).toEqual(debits+amountInput);
+  })
+
+  it('Balance of RecordPanel should update when delete-button clicked', function(){
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
+    const caDOM =findDOMNode(ca);
+    const panels = caDOM.querySelectorAll(".panel-body");
+    const balance = RMBData2Float(panels[2].innerHTML);
+
+    const input = caDOM.querySelectorAll('input');
+    let date = input[0];
+    let dateInput = "2017-11-11"
+    date.value = dateInput;
+    ReactTestUtils.Simulate.change(date);
+    let title = input[1];
+    let titleInput = "Buy hair lotion";
+    title.value = titleInput;
+    ReactTestUtils.Simulate.change(title);
+    let amount = input[2];
+    let amountInput = -100
+    amount.value = amountInput;
+    ReactTestUtils.Simulate.change(amount);
+    ReactTestUtils.Simulate.keyDown(amount, {key: "Enter", keyCode: 13, which: 13});
+    let submitButton = caDOM.querySelector('button');
+    ReactTestUtils.Simulate.click(submitButton);
+
+    const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
+    const balanceAfterClick = RMBData2Float(panels[2].innerHTML);
+    expect(balanceAfterClick).toEqual(balance+amountInput);
   })
 })
 
@@ -71,7 +157,7 @@ describe('Delete a record', function() {
   })
 
   it('Benefits of RecordPanel should update when delete-button clicked', function(){
-    const ca = TestUtils.renderIntoDocument(<ChargeAccount/>);
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
     const benefits = RMBData2Float(panels[0].innerHTML);
@@ -79,10 +165,10 @@ describe('Delete a record', function() {
     const recordTable = caDOM.querySelector('#recordTable');
     const record_tbody = recordTable.querySelector('tbody');
     const record = (record_tbody.querySelectorAll('tr'))[1];
-    const amount = RMBData2Float(record.querySelector('#amount').innerHTML);
+    const amount = RMBData2Float(record.querySelector('.amount').innerHTML);
 
     let deleteButton = record.querySelector('button');
-    TestUtils.Simulate.click(deleteButton);
+    ReactTestUtils.Simulate.click(deleteButton);
 
     const caDOMAfterClick =findDOMNode(ca);
     const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
@@ -92,7 +178,7 @@ describe('Delete a record', function() {
   })
 
   it('Debits of RecordPanel should update when delete-button clicked', function(){
-    const ca = TestUtils.renderIntoDocument(<ChargeAccount/>);
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
     const debits = RMBData2Float(panels[1].innerHTML);
@@ -100,10 +186,10 @@ describe('Delete a record', function() {
     const recordTable = caDOM.querySelector('#recordTable');
     const record_tbody = recordTable.querySelector('tbody');
     const record = record_tbody.querySelector('tr');
-    const amount = RMBData2Float(record.querySelector('#amount').innerHTML);
+    const amount = RMBData2Float(record.querySelector('.amount').innerHTML);
 
     let deleteButton = record.querySelector('button');
-    TestUtils.Simulate.click(deleteButton);
+    ReactTestUtils.Simulate.click(deleteButton);
 
     const caDOMAfterClick =findDOMNode(ca);
     const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
@@ -113,7 +199,7 @@ describe('Delete a record', function() {
   })
 
   it('Balance of RecordPanel should update when delete-button clicked', function(){
-    const ca = TestUtils.renderIntoDocument(<ChargeAccount/>);
+    const ca = ReactTestUtils.renderIntoDocument(<ChargeAccount/>);
     const caDOM =findDOMNode(ca);
     const panels = caDOM.querySelectorAll(".panel-body");
     const debits = RMBData2Float(panels[2].innerHTML);
@@ -121,10 +207,10 @@ describe('Delete a record', function() {
     const recordTable = caDOM.querySelector('#recordTable');
     const record_tbody = recordTable.querySelector('tbody');
     const record = record_tbody.querySelector('tr');
-    const amount = RMBData2Float(record.querySelector('#amount').innerHTML);
+    const amount = RMBData2Float(record.querySelector('.amount').innerHTML);
 
     let deleteButton = record.querySelector('button');
-    TestUtils.Simulate.click(deleteButton);
+    ReactTestUtils.Simulate.click(deleteButton);
 
     const caDOMAfterClick =findDOMNode(ca);
     const panelsAfterClick = caDOM.querySelectorAll(".panel-body");
