@@ -153,7 +153,7 @@ describe('Delete a record', () => {
     deleteButton.simulate('click');
 
     let recordsNumAfterClick = ca.find('#recordTable').find('tbody').find('tr').length;
-    expect(recordsNumAfterClick).toEqual(recordsNum-1);
+    expect(recordsNumAfterClick===recordsNum-1);
   })
 
   it('Benefits of RecordPanel should update when delete-button clicked', () => {
