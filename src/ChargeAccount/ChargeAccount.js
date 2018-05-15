@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Table, Form, FormGroup, ControlLabel, FormControl, Panel} from "react-bootstrap"
+import { isNumber } from 'util';
 
 class Record extends React.Component{
   fmoney(s, n=2){       // this function is copied from http://blog.csdn.net/fengzijinliang/article/details/53335320
@@ -50,6 +51,10 @@ class RecordForm extends React.Component{
   }
   conveyRecord(e){
       e.preventDefault();
+      if (!isNumber(this.state.amount)){
+          alert("Amount should be a number!")
+          return;
+      }
       var record = {
           key: this.props.num,
           date:this.state.date,
@@ -79,7 +84,7 @@ class RecordForm extends React.Component{
                   <FormControl type="number" placeholder="Amount" name="amount" onChange={this.handleChange}/>
               </FormGroup>
               {' '}
-              <Button type="submit" onClick={this.conveyRecord} >
+              <Button bsStyle="primary" type="submit" onClick={this.conveyRecord} >
                   Add
               </Button>
           </Form>
