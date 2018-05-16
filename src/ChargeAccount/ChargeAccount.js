@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Table, Form, FormGroup, ControlLabel, FormControl, Panel} from "react-bootstrap"
-import { isNumber } from 'util';
 
 class Record extends React.Component{
   fmoney(s, n=2){       // this function is copied from http://blog.csdn.net/fengzijinliang/article/details/53335320
@@ -51,15 +50,15 @@ class RecordForm extends React.Component{
   }
   conveyRecord(e){
       e.preventDefault();
-      if (!isNumber(this.state.amount)){
-          alert("Amount should be a number!")
+      if (typeof(Number(this.state.amount)) !== 'number'){
+          alert("Amount: should be a number!")
           return;
       }
       var record = {
           key: this.props.num,
           date:this.state.date,
           title:this.state.title,
-          amount:this.state.amount
+          amount:Number(this.state.amount)
       }
       this.props.addRecord(record)
   }

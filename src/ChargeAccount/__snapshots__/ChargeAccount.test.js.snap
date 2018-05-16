@@ -152,7 +152,7 @@ exports[`renders as expected 1`] = `
       </div>
        
       <button
-        className="btn btn-default"
+        className="btn btn-primary"
         disabled={false}
         onClick={[Function]}
         type="submit"
